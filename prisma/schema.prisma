@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String     @id @unique
+  
+  email         String     @unique
+  name          String
+  history       AIOutput[]
+  total_credit  Float      @default(10000)
+  Customer      Customer?  // Optional 1-to-1 relationship
+}
+
+model AIOutput {
+  id           String   @id @default(cuid())
+  templateUsed String
+  title        String
+  description  String
+  createdAt    DateTime @default(now())
+  User         User     @relation(fields: [userId], references: [id])
+  userId       String
+}
+
+model Customer {
+  id                String     @id @default(cuid())
+  userId            String     @unique
+  stripe_customerId String     @unique
+  User              User?      @relation(fields: [userId], references: [id]) // Optional 1-to-1 relationship
+  Purchase          Purchase[] // 1-to-many relationship
+}
+
+model Purchase {
+  id          String   @id @default(cuid())
+  customer_id String
+  credit      Float
+  createdAt   DateTime @default(now())
+  Customer    Customer @relation(fields: [customer_id], references: [id])
+}
