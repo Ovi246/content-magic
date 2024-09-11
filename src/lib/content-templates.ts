@@ -5,6 +5,7 @@ import {
   FaLinkedin,
   FaTwitter,
 } from "react-icons/fa";
+import { GiArcher } from "react-icons/gi";
 
 export const contentTemplates = [
   {
@@ -136,6 +137,23 @@ export const contentTemplates = [
         label: "Enter tweet outline",
         field: "textarea",
         name: "outline",
+      },
+    ],
+  },
+  {
+    name: "Historical Script",
+    desc: "An AI tool that generate Historical Story script based on your topic name",
+    category: "History",
+    icon: GiArcher,
+    aiPrompt:
+      "give me some historical facts about given topic as a creative storyteller generate the script for me for 1min give me with this format Line1: In the ancient land of Macedonia, a boy named Alexander was born in 356 BCE. --image1: Portrait of young alexander, crown, scepture, powdered wig, antique background image, ultra -realistic, hyper, unreal engine --image2: Sun rising behind a silhouette of a young man crowned with laurels Line2: ... make sure image descriptions must taken from the line context",
+    slug: "generate-historic-story",
+    form: [
+      {
+        label: "Enter your topic name",
+        field: "input",
+        name: "topicName",
+        required: true,
       },
     ],
   },
